@@ -143,7 +143,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
             ),
             SizedBox(height: 8),
             Text(
-              '${widget.type}',
+              widget.type,
             ),
             SizedBox(height: 20),
             Text(
@@ -156,7 +156,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
             ),
             SizedBox(height: 8),
             Text(
-              '${widget.equipment}',
+              widget.equipment,
             ),
             SizedBox(height: 20),
             Text(
@@ -169,7 +169,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
             ),
             SizedBox(height: 8),
             Text(
-              '${widget.muscle}',
+              widget.muscle,
             ),
             SizedBox(height: 20),
             Text(
