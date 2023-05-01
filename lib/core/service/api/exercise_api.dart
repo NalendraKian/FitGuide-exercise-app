@@ -4,10 +4,14 @@ import 'package:fitguide_exercise/core/service/api/api.dart';
 
 class ExerciseApi {
   Dio dio = Dio();
-  static Future<List<Exercise>> getExercises() async {
+
+  static Future<List<Exercise>> getExercises(int offset) async {
     final Response response = await Dio().get(
         'https://api.api-ninjas.com/v1/exercises',
-        options: Options(headers: {"X-Api-Key": Api.apiKey}));
+        options: Options(headers: {"X-Api-Key": Api.apiKey}),
+        queryParameters: {
+          "offset": offset,
+        });
 
     List<Exercise> exercises = (response.data as List)
         .map((e) => Exercise(
