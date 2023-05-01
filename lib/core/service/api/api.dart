@@ -1,4 +1,4 @@
 class Api {
   static const baseUrl = '';
-  static const apiKey = 'XpDVaFe35PeHYH4HrzHOsEGmUNQSm1nqNElouDjH';
+  static const apiKey = 'CHANGING API KEY';
 }
