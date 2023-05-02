@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:fitguide_exercise/UI/view/screen/search_screen.dart';
 import 'package:fitguide_exercise/UI/view/widget/bottom_navigation_bar/bottom_navigation_item.dart';
 import 'package:fitguide_exercise/UI/view_model/bottom_nav_view_model.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +25,26 @@ class _InitialBottomWidgetState extends State<BottomNavigationWidget> {
         child: provider.currentScreen,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SearchScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.ease;
+
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+            },
+          ));
+        },
         child: const Icon(Icons.search),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
