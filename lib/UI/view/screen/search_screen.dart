@@ -22,7 +22,6 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   final formKey = GlobalKey<FormState>();
-  // String search = '';
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -57,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Find an searchExercise',
+                      'Find an Exercise',
                       style: TextStyle(
                         color: Colors.blue,
                         fontSize: 30,
@@ -79,8 +79,12 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               SizedBox(height: 24),
               buildSearch(),
-              SizedBox(height: 24),
+              SizedBox(height: 12),
+              buildFilter(),
+              SizedBox(height: 12),
               showSearchExercise(),
+              SizedBox(height: 12),
+              nextAndPreviousButton(),
             ],
           ),
         ),
@@ -132,14 +136,109 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  styleBorder() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(30),
-      borderSide: BorderSide(
-        width: 2,
-        color: Colors.black,
-      ),
-    );
+  Consumer<ExerciseViewModel> buildFilter() {
+    return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Difficulty',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[700],
+              ),
+            ),
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    const String difficulty = 'Beginner';
+                    provider.getFilterSearch(
+                        provider.searchController.text, difficulty);
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.grey,
+                      ),
+                      color: Colors.white,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Beginner',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    const String difficulty = 'Intermediate';
+                    provider.getFilterSearch(
+                        provider.searchController.text, difficulty);
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.grey,
+                      ),
+                      color: Colors.white,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Intermediate',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    const String difficulty = 'Expert';
+                    provider.getFilterSearch(
+                        provider.searchController.text, difficulty);
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.grey,
+                      ),
+                      color: Colors.white,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Expert',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Consumer<ExerciseViewModel> showSearchExercise() {
@@ -208,5 +307,80 @@ class _SearchScreenState extends State<SearchScreen> {
         },
       );
     });
+  }
+
+  Consumer<ExerciseViewModel> nextAndPreviousButton() {
+    return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
+      // int offset = 0;
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              provider.offset = provider.offset - 10;
+              provider.getNextSearch(
+                  provider.searchController.text, provider.offset);
+            },
+            child: Container(
+              height: 35,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  width: 2,
+                  color: Colors.grey,
+                ),
+                color: Colors.white,
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                'Previous',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              provider.offset = provider.offset + 10;
+              provider.getNextSearch(
+                  provider.searchController.text, provider.offset);
+            },
+            child: Container(
+              height: 35,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  width: 2,
+                  color: Colors.grey,
+                ),
+                color: Colors.white,
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                'Next',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
+  OutlineInputBorder styleBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+      borderSide: BorderSide(
+        width: 2,
+        color: Colors.black,
+      ),
+    );
   }
 }

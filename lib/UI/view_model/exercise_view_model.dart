@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class ExerciseViewModel with ChangeNotifier {
   bool isLoading = true;
-  String error = '';
-  String searchText = '';
+  String difficulty = '';
+  int offset = 0;
 
   List<Exercise> _exercises = [];
   List<Exercise> get exercises => _exercises;
@@ -24,8 +24,37 @@ class ExerciseViewModel with ChangeNotifier {
   List<SearchExercise> get searchExercise => _searchExercises;
 
   getSearch(String name) async {
-    final c = await ExerciseApi.searchExercise(name);
+    difficulty = '';
+    offset = 0;
+    final c = await ExerciseApi.searchExercise(name, difficulty, offset);
     _searchExercises = c;
+    notifyListeners();
+  }
+
+  getFilterSearch(String name, String newDifficulty) async {
+    difficulty = newDifficulty;
+    offset = 0;
+    final c = await ExerciseApi.searchExercise(name, difficulty, offset);
+    _searchExercises = c;
+    notifyListeners();
+  }
+
+  getNextSearch(String name, int newOffset) async {
+    if (offset < 0) {
+      offset = 0;
+    } else {
+      offset = newOffset;
+    }
+
+    List<SearchExercise> c =
+        await ExerciseApi.searchExercise(name, difficulty, offset);
+
+    if (c.isEmpty) {
+      await ExerciseApi.searchExercise(name, difficulty, offset - 10);
+    } else {
+      _searchExercises = c;
+    }
+
     notifyListeners();
   }
 }
