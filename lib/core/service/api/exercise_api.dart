@@ -25,13 +25,15 @@ class ExerciseApi {
     return exercises;
   }
 
-  static Future<List<SearchExercise>> searchExercise(String name) async {
+  static Future<List<SearchExercise>> searchExercise(
+      String name, difficulty, int offset) async {
     final Response response = await Dio().get(
         'https://api.api-ninjas.com/v1/exercises',
         options: Options(headers: {"X-Api-Key": Api.apiKey}),
         queryParameters: {
-          // "offset": offset,
-          'name': name
+          'name': name,
+          'difficulty': difficulty,
+          "offset": offset,
         });
 
     List<SearchExercise> searchExercises = (response.data as List)

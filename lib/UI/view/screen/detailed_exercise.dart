@@ -132,6 +132,19 @@ class _DetailedExerciseState extends State<DetailedExercise> {
             ),
             SizedBox(height: 8),
             Text(
+              'Difficulty',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              widget.difficulty,
+            ),
+            SizedBox(height: 8),
+            Text(
               'Exercise Type',
               style: TextStyle(
                 fontSize: 18,
