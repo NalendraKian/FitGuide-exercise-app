@@ -24,29 +24,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(25),
-              child: Text(
-                'Welcome to FitGuide',
-                style: TextStyle(fontSize: 26),
-              ),
+        body: SafeArea(
+      child: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(25),
+            child: Text(
+              'Welcome to FitGuide',
+              style: TextStyle(fontSize: 26),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            showExercise(),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          showExercise(),
+        ],
       ),
-    );
+    ));
   }
 
-  Consumer<ExerciseViewModel> showExercise() {
+  showExercise() {
     return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
-      final modelView = Provider.of<ExerciseViewModel>(context);
+      final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
 
       return GridView.builder(
         physics: NeverScrollableScrollPhysics(),
