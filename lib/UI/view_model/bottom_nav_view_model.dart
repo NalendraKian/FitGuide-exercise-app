@@ -1,3 +1,6 @@
+import 'package:fitguide_exercise/UI/view/screen/account_screen.dart';
+import 'package:fitguide_exercise/UI/view/screen/calories_calculator_screen.dart';
+import 'package:fitguide_exercise/UI/view/screen/favourite_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide_exercise/UI/view/screen/home_screen.dart';
 
@@ -5,6 +8,9 @@ class BottomNavViewModel with ChangeNotifier {
   int _currentTab = 0;
   final List<Widget> screens = [
     const HomeScreen(),
+    const CaloriesCalculatorScreen(),
+    const FavouriteScreen(),
+    const AccountScreen(),
   ];
   Widget _currentScreen = const HomeScreen();
 
@@ -17,21 +23,21 @@ class BottomNavViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void favoriteTab() {
+  void caloriesTab() {
     _currentScreen = screens[1];
     _currentTab = 1;
     notifyListeners();
   }
 
-  void notificationTab() {
+  void favoriteTab() {
     _currentScreen = screens[2];
-    _currentTab = 3;
+    _currentTab = 2;
     notifyListeners();
   }
 
   void accountTab() {
     _currentScreen = screens[3];
-    _currentTab = 4;
+    _currentTab = 3;
     notifyListeners();
   }
 }

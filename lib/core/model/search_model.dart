@@ -1,4 +1,4 @@
-class Exercise {
+class SearchExercise {
   late String name;
   late String type;
   late String muscle;
@@ -6,7 +6,7 @@ class Exercise {
   late String difficulty;
   late String instructions;
 
-  Exercise({
+  SearchExercise({
     required this.name,
     required this.type,
     required this.muscle,
@@ -15,7 +15,7 @@ class Exercise {
     required this.instructions,
   });
 
-  Exercise.fromJson(Map<String, dynamic> json) {
+  SearchExercise.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     type = json['type'];
     muscle = json['muscle'];

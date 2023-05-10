@@ -41,7 +41,8 @@ dependencies:
   dio: ^5.1.1
   flutter_svg: ^2.0.4
   youtube_player_flutter: ^8.1.2
-  youtube_data_api: ^1.0.4
+  youtube_api: ^1.0.4
+  youtube_explode_dart: ^1.12.4
 
 dev_dependencies:
   flutter_test:

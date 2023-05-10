@@ -20,6 +20,7 @@ class _InitialBottomWidgetState extends State<BottomNavigationWidget> {
   Widget build(BuildContext context) {
     final provider = Provider.of<BottomNavViewModel>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageStorage(
         bucket: bucket,
         child: provider.currentScreen,

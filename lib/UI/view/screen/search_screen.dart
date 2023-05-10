@@ -84,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
               SizedBox(height: 12),
               showSearchExercise(),
               SizedBox(height: 12),
-              nextAndPreviousButton(),
+              // nextAndPreviousButton(),
             ],
           ),
         ),
@@ -245,66 +245,130 @@ class _SearchScreenState extends State<SearchScreen> {
     return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
       final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
 
-      return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: modelView.searchExercise.length,
-        itemBuilder: (_, index) {
-          final searchExercise = modelView.searchExercise[index];
-          return GestureDetector(
-            onTap: () async {
-              Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    DetailedExercise(
-                  name: searchExercise.name,
-                  type: searchExercise.type,
-                  difficulty: searchExercise.difficulty,
-                  equipment: searchExercise.equipment,
-                  instructions: searchExercise.instructions,
-                  muscle: searchExercise.muscle,
-                ),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(0.0, 1.0);
-                  const end = Offset.zero;
-                  const curve = Curves.ease;
-
-                  var tween = Tween(begin: begin, end: end)
-                      .chain(CurveTween(curve: curve));
-
-                  return SlideTransition(
-                    position: animation.drive(tween),
-                    child: child,
-                  );
-                },
-              ));
-            },
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: Card(
-                child: Column(
-                  children: [
-                    Image(
-                      image: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2018/03/17/20/51/white-buildings-3235135__340.jpg"),
-                      fit: BoxFit.cover,
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemCount: modelView.searchExercise.length,
+            itemBuilder: (_, index) {
+              final searchExercise = modelView.searchExercise[index];
+              return GestureDetector(
+                onTap: () async {
+                  Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        DetailedExercise(
+                      name: searchExercise.name,
+                      type: searchExercise.type,
+                      difficulty: searchExercise.difficulty,
+                      equipment: searchExercise.equipment,
+                      instructions: searchExercise.instructions,
+                      muscle: searchExercise.muscle,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Text(
-                        searchExercise.name,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  ],
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(0.0, 1.0);
+                      const end = Offset.zero;
+                      const curve = Curves.ease;
+
+                      var tween = Tween(begin: begin, end: end)
+                          .chain(CurveTween(curve: curve));
+
+                      return SlideTransition(
+                        position: animation.drive(tween),
+                        child: child,
+                      );
+                    },
+                  ));
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image(
+                          image: NetworkImage(
+                              "https://cdn.pixabay.com/photo/2018/03/17/20/51/white-buildings-3235135__340.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Text(
+                            searchExercise.name,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  provider.offset = provider.offset - 10;
+                  provider.getNextSearch(
+                      provider.searchController.text, provider.offset);
+                },
+                child: Container(
+                  height: 35,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Previous',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+              ElevatedButton(
+                onPressed: () async {
+                  provider.offset = provider.offset + 10;
+                  provider.getNextSearch(
+                      provider.searchController.text, provider.offset);
+                },
+                child: Container(
+                  height: 35,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       );
     });
   }

@@ -12,7 +12,7 @@ class BottomNavItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,11 +31,11 @@ class BottomNavItems extends StatelessWidget {
             ),
             MaterialButton(
               onPressed: () {
-                provider.favoriteTab();
+                provider.caloriesTab();
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.favorite),
+                (Icons.home),
                 color: provider.currentTab == 1
                     ? Colors.blue
                     : Colors.black.withOpacity(0.2),
@@ -44,16 +44,16 @@ class BottomNavItems extends StatelessWidget {
           ],
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             MaterialButton(
               onPressed: () {
-                provider.notificationTab();
+                provider.favoriteTab();
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.notifications),
-                color: provider.currentTab == 3
+                (Icons.home),
+                color: provider.currentTab == 2
                     ? Colors.blue
                     : Colors.black.withOpacity(0.2),
               ),
@@ -64,8 +64,8 @@ class BottomNavItems extends StatelessWidget {
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.person),
-                color: provider.currentTab == 4
+                (Icons.home),
+                color: provider.currentTab == 3
                     ? Colors.blue
                     : Colors.black.withOpacity(0.2),
               ),

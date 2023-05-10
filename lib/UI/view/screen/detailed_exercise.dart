@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:fitguide_exercise/core/service/api/api_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_api/youtube_api.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailedExercise extends StatefulWidget {
@@ -25,11 +27,34 @@ class DetailedExercise extends StatefulWidget {
 }
 
 class _DetailedExerciseState extends State<DetailedExercise> {
+  bool typing = false;
+
+  YoutubeAPI youtube =
+      YoutubeAPI(YoutubeApi.apiKey, maxResults: 1, type: 'Video');
+  List<YouTubeVideo> videoResult = [];
+
+  Future<void> callAPI() async {
+    videoResult = await youtube.search(
+      "${widget.name} tutorial",
+      order: 'relevance',
+      videoDuration: 'any',
+    );
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    callAPI();
+  }
+
   final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: 'u31qwQUeGuM',
+    initialVideoId: 'kvO_nHnvPtQ',
     flags: YoutubePlayerFlags(
       autoPlay: false,
       mute: false,
+      hideThumbnail: true,
+      showLiveFullscreenButton: true,
     ),
   );
 
@@ -71,7 +96,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                   ),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {},
                     icon: Icon(
                       Icons.favorite,
                       color: Colors.blue,
@@ -202,15 +227,35 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
-            YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
+            SizedBox(height: 10),
+            ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: videoResult.map<Widget>(listItem).toList(),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
           ],
         ),
       ),
+    );
+  }
+
+  Widget listItem(YouTubeVideo video) {
+    String id = video.id.toString();
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      bottomActions: [
+        CurrentPosition(),
+        ProgressBar(isExpanded: true),
+      ],
+      progressColors: ProgressBarColors(
+        playedColor: Colors.amber,
+        handleColor: Colors.amberAccent,
+      ),
+      onReady: () {
+        _controller.load(id);
+      },
     );
   }
 }
