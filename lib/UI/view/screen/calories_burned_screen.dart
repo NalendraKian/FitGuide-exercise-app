@@ -22,7 +22,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CaloriesViewModel>(context);
+    final provider = Provider.of<CaloriesViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(

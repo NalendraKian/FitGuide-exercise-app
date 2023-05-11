@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ExerciseViewModel>(context);
+    final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
