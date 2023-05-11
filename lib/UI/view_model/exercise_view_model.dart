@@ -1,4 +1,3 @@
-import 'package:fitguide_exercise/core/model/favourite_model.dart';
 import 'package:fitguide_exercise/core/service/api/exercise_api.dart';
 import 'package:fitguide_exercise/core/model/exercise_model.dart';
 import 'package:fitguide_exercise/core/model/search_model.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class ExerciseViewModel with ChangeNotifier {
   bool isLoading = true;
+  String error = '';
   String difficulty = '';
   int offset = 0;
 
@@ -28,16 +28,25 @@ class ExerciseViewModel with ChangeNotifier {
   getSearch(String name) async {
     difficulty = '';
     offset = 0;
+
     final c = await ExerciseApi.searchExercise(name, difficulty, offset);
     _searchExercises = c;
+
     notifyListeners();
   }
 
   getFilterSearch(String name, String newDifficulty) async {
     difficulty = newDifficulty;
     offset = 0;
+
     final c = await ExerciseApi.searchExercise(name, difficulty, offset);
+
     _searchExercises = c;
+
+    if (_searchExercises.isEmpty) {
+      error = 'No Result was Found';
+    }
+
     notifyListeners();
   }
 

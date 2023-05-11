@@ -1,3 +1,4 @@
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide_exercise/UI/view_model/bottom_nav_view_model.dart';
 
@@ -24,9 +25,10 @@ class BottomNavItems extends StatelessWidget {
               shape: const CircleBorder(),
               child: Icon(
                 (Icons.home),
+                size: 30,
                 color: provider.currentTab == 0
-                    ? Colors.blue
-                    : Colors.black.withOpacity(0.2),
+                    ? primaryColor
+                    : quarternaryColor.withOpacity(0.8),
               ),
             ),
             MaterialButton(
@@ -35,10 +37,11 @@ class BottomNavItems extends StatelessWidget {
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.home),
+                (Icons.local_fire_department),
+                size: 30,
                 color: provider.currentTab == 1
-                    ? Colors.blue
-                    : Colors.black.withOpacity(0.2),
+                    ? primaryColor
+                    : quarternaryColor.withOpacity(0.8),
               ),
             ),
           ],
@@ -52,10 +55,11 @@ class BottomNavItems extends StatelessWidget {
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.home),
+                (Icons.favorite_rounded),
+                size: 30,
                 color: provider.currentTab == 2
-                    ? Colors.blue
-                    : Colors.black.withOpacity(0.2),
+                    ? primaryColor
+                    : quarternaryColor.withOpacity(0.8),
               ),
             ),
             MaterialButton(
@@ -64,10 +68,11 @@ class BottomNavItems extends StatelessWidget {
               },
               shape: const CircleBorder(),
               child: Icon(
-                (Icons.home),
+                (Icons.account_circle),
+                size: 30,
                 color: provider.currentTab == 3
-                    ? Colors.blue
-                    : Colors.black.withOpacity(0.2),
+                    ? primaryColor
+                    : quarternaryColor.withOpacity(0.8),
               ),
             ),
           ],

@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:fitguide_exercise/core/service/api/api_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_api/youtube_api.dart';
@@ -35,7 +34,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
 
   Future<void> callAPI() async {
     videoResult = await youtube.search(
-      "${widget.name} tutorial",
+      "${widget.name} exercise tutorial",
       order: 'relevance',
       videoDuration: 'any',
     );
@@ -50,7 +49,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
 
   final YoutubePlayerController _controller = YoutubePlayerController(
     initialVideoId: 'kvO_nHnvPtQ',
-    flags: YoutubePlayerFlags(
+    flags: const YoutubePlayerFlags(
       autoPlay: false,
       mute: false,
       hideThumbnail: true,
@@ -61,16 +60,17 @@ class _DetailedExerciseState extends State<DetailedExercise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       body: Stack(
         children: [
           FadeInImage(
             height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.cover,
-            placeholder: AssetImage("assets/images/placeholder.png"),
-            image: AssetImage("assets/images/placeholder.png"),
+            placeholder: const AssetImage("assets/images/placeholder.png"),
+            image: const AssetImage("assets/images/placeholder.png"),
             imageErrorBuilder: (context, error, stackTrace) {
-              return Center(
+              return const Center(
                 child: Icon(Icons.broken_image),
               );
             },
@@ -89,15 +89,15 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.blue,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     onPressed: () async {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite,
                       color: Colors.blue,
                     ),
@@ -115,7 +115,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
@@ -129,12 +129,12 @@ class _DetailedExerciseState extends State<DetailedExercise> {
           ),
         ],
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Center(
               child: Container(
                 height: 8,
@@ -145,17 +145,17 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
               widget.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Difficulty',
               style: TextStyle(
@@ -164,11 +164,11 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.difficulty,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Exercise Type',
               style: TextStyle(
@@ -177,11 +177,11 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.type,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Equipment',
               style: TextStyle(
@@ -190,11 +190,11 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.equipment,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Muscle ',
               style: TextStyle(
@@ -203,11 +203,11 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.muscle,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Instruction',
               style: TextStyle(
@@ -216,9 +216,9 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(widget.instructions),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
               'Tutorial Video',
               style: TextStyle(
@@ -227,13 +227,13 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: videoResult.map<Widget>(listItem).toList(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -249,12 +249,13 @@ class _DetailedExerciseState extends State<DetailedExercise> {
         CurrentPosition(),
         ProgressBar(isExpanded: true),
       ],
-      progressColors: ProgressBarColors(
+      progressColors: const ProgressBarColors(
         playedColor: Colors.amber,
         handleColor: Colors.amberAccent,
       ),
       onReady: () {
         _controller.load(id);
+        _controller.pause();
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:fitguide_exercise/UI/view/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -59,7 +61,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         (route) => false);
                   },
-                  child: Text(
+                  child: const Text(
                     'Log Out',
                   ),
                 ),

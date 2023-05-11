@@ -1,5 +1,5 @@
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:fitguide_exercise/UI/view/screen/login_screen.dart';
-import 'package:fitguide_exercise/UI/view/widget/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -33,25 +33,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFF5722),
+      backgroundColor: primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               widget.appname,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 75.0,
-                color: Colors.amberAccent,
+                color: secondaryColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 10.0),
             Text(
               widget.tagline,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15.0,
                 letterSpacing: 7.5,
-                color: Colors.white,
+                color: whiteColor,
               ),
             ),
           ],

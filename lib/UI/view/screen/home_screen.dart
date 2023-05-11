@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:fitguide_exercise/UI/view/screen/detailed_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide_exercise/UI/view_model/exercise_view_model.dart';
@@ -14,44 +13,80 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ExerciseViewModel>(context, listen: false).getAllExercises();
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final modelView = Provider.of<ExerciseViewModel>(context);
     return Scaffold(
+        backgroundColor: primaryColor,
         body: SafeArea(
-      child: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(25),
-            child: Text(
-              'Welcome to FitGuide',
-              style: TextStyle(fontSize: 26),
-            ),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  'Welcome to FitGuide',
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: quinaryColor,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              modelView.isLoading
+                  ? getLoading()
+                  : modelView.exercises.isNotEmpty
+                      ? showExercise()
+                      : getError()
+            ],
           ),
-          SizedBox(
-            height: 20,
-          ),
-          showExercise(),
-        ],
-      ),
-    ));
+        ));
   }
 
-  showExercise() {
+  Widget getLoading() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(
+            color: quinaryColor,
+          ),
+          Text(
+            'Loading Data',
+            style: TextStyle(fontSize: 20, color: quinaryColor),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getError() {
+    return Center(
+      child: Text(
+        'error',
+        style: const TextStyle(color: Colors.red, fontSize: 22),
+      ),
+    );
+  }
+
+  Consumer<ExerciseViewModel> showExercise() {
     return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
       final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
 
       return GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: modelView.exercises.length,
         itemBuilder: (_, index) {
           final exercise = modelView.exercises[index];
@@ -84,13 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ));
             },
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Card(
                 child: Column(
                   children: [
-                    Image(
+                    const Image(
                       image: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2018/03/17/20/51/white-buildings-3235135__340.jpg"),
+                          "https://images.pexels.com/photos/2827392/pexels-photo-2827392.jpeg"),
                       fit: BoxFit.cover,
                     ),
                     Padding(

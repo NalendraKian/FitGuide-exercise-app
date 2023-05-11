@@ -3,7 +3,6 @@ import 'package:fitguide_exercise/core/service/api/calories_api.dart';
 import 'package:flutter/material.dart';
 
 class CaloriesViewModel with ChangeNotifier {
-  bool isLoading = true;
   String difficulty = '';
   int offset = 0;
 

@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:fitguide_exercise/UI/view/screen/detailed_exercise.dart';
 import 'package:fitguide_exercise/UI/view_model/exercise_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,78 +13,96 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<ExerciseViewModel>(context, listen: false).getSearch('');
+      Provider.of<ExerciseViewModel>(context, listen: false);
     });
+    super.initState();
   }
 
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final modelView = Provider.of<ExerciseViewModel>(context);
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
+      backgroundColor: primaryColor,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Provider.of<ExerciseViewModel>(context, listen: false)
+                        .getAllExercises();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 24, 8, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Provider.of<ExerciseViewModel>(context, listen: false)
-                          .getAllExercises();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.blue,
+                  Text(
+                    'Find an Exercise',
+                    style: TextStyle(
+                      fontSize: 26,
+                      color: quinaryColor,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(16, 24, 8, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Find an Exercise',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'With Filter (Coming Soon)',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  'With Filter (Coming Soon)',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
-              SizedBox(height: 24),
-              buildSearch(),
-              SizedBox(height: 12),
-              buildFilter(),
-              SizedBox(height: 12),
-              showSearchExercise(),
-              SizedBox(height: 12),
-              // nextAndPreviousButton(),
-            ],
+            ),
+            const SizedBox(height: 24),
+            buildSearch(),
+            const SizedBox(height: 12),
+            buildFilter(),
+            modelView.searchExercise.isNotEmpty
+                ? showSearchExercise()
+                : getNoResult(modelView.error),
+            const SizedBox(height: 12),
+            nextAndPreviousButton(),
+            const SizedBox(height: 12),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget getNoResult(String error) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
+        child: Text(
+          error,
+          style: TextStyle(
+            fontSize: 26,
+            color: quinaryColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -97,7 +114,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Form(
       key: formKey,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextField(
           controller: provider.searchController,
           decoration: InputDecoration(
@@ -105,7 +122,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () async {
                 provider.getSearch(provider.searchController.text);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 color: Colors.blue,
               ),
@@ -115,7 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () {
                 provider.searchController.clear();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.clear,
                 color: Colors.blue,
               ),
@@ -124,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
             enabledBorder: styleBorder(),
             focusedBorder: styleBorder(),
             disabledBorder: styleBorder(),
-            contentPadding: EdgeInsets.symmetric(
+            contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 8,
             ),
@@ -136,109 +153,116 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Consumer<ExerciseViewModel> buildFilter() {
-    return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Difficulty',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[700],
+  Widget buildFilter() {
+    final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Difficulty',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 20,
+              color: quinaryColor,
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              MaterialButton(
+                onPressed: () async {
+                  const String difficulty = 'Beginner';
+                  modelView.getFilterSearch(
+                      modelView.searchController.text, difficulty);
+                },
+                child: Container(
+                  height: 35,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.grey,
+                    ),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Beginner',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: quinaryColor,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    const String difficulty = 'Beginner';
-                    provider.getFilterSearch(
-                        provider.searchController.text, difficulty);
-                  },
-                  child: Container(
-                    height: 35,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                      color: Colors.white,
+              MaterialButton(
+                onPressed: () {
+                  const String difficulty = 'Intermediate';
+                  modelView.getFilterSearch(
+                      modelView.searchController.text, difficulty);
+                },
+                child: Container(
+                  height: 35,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.grey,
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Beginner',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Intermediate',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: quinaryColor,
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    const String difficulty = 'Intermediate';
-                    provider.getFilterSearch(
-                        provider.searchController.text, difficulty);
-                  },
-                  child: Container(
-                    height: 35,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                      color: Colors.white,
+              ),
+              MaterialButton(
+                onPressed: () {
+                  const String difficulty = 'Expert';
+                  modelView.getFilterSearch(
+                      modelView.searchController.text, difficulty);
+                },
+                child: Container(
+                  height: 35,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 2,
+                      color: Colors.grey,
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Intermediate',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
+                    color: Colors.white,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Expert',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: quinaryColor,
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    const String difficulty = 'Expert';
-                    provider.getFilterSearch(
-                        provider.searchController.text, difficulty);
-                  },
-                  child: Container(
-                    height: 35,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        width: 2,
-                        color: Colors.grey,
-                      ),
-                      color: Colors.white,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Expert',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    });
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Consumer<ExerciseViewModel> showSearchExercise() {
@@ -249,10 +273,10 @@ class _SearchScreenState extends State<SearchScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
             itemCount: modelView.searchExercise.length,
             itemBuilder: (_, index) {
               final searchExercise = modelView.searchExercise[index];
@@ -285,13 +309,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   ));
                 },
                 child: Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Card(
                     child: Column(
                       children: [
-                        Image(
+                        const Image(
                           image: NetworkImage(
-                              "https://cdn.pixabay.com/photo/2018/03/17/20/51/white-buildings-3235135__340.jpg"),
+                              "https://images.pexels.com/photos/2827392/pexels-photo-2827392.jpeg"),
                           fit: BoxFit.cover,
                         ),
                         Padding(
@@ -309,139 +333,80 @@ class _SearchScreenState extends State<SearchScreen> {
               );
             },
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  provider.offset = provider.offset - 10;
-                  provider.getNextSearch(
-                      provider.searchController.text, provider.offset);
-                },
-                child: Container(
-                  height: 35,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    color: Colors.white,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Previous',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  provider.offset = provider.offset + 10;
-                  provider.getNextSearch(
-                      provider.searchController.text, provider.offset);
-                },
-                child: Container(
-                  height: 35,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    color: Colors.white,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ],
       );
     });
   }
 
-  Consumer<ExerciseViewModel> nextAndPreviousButton() {
-    return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
-      // int offset = 0;
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(
-            onPressed: () async {
-              provider.offset = provider.offset - 10;
-              provider.getNextSearch(
-                  provider.searchController.text, provider.offset);
-            },
-            child: Container(
-              height: 35,
-              width: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  width: 2,
-                  color: Colors.grey,
-                ),
-                color: Colors.white,
+  Row nextAndPreviousButton() {
+    final provider = Provider.of<ExerciseViewModel>(context, listen: false);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        MaterialButton(
+          onPressed: () async {
+            provider.offset = provider.offset - 10;
+            provider.getNextSearch(
+                provider.searchController.text, provider.offset);
+          },
+          child: Container(
+            height: 35,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.grey,
               ),
-              alignment: Alignment.center,
-              child: Text(
-                'Previous',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                ),
+              color: Colors.white,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              'Previous',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: quinaryColor,
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              provider.offset = provider.offset + 10;
-              provider.getNextSearch(
-                  provider.searchController.text, provider.offset);
-            },
-            child: Container(
-              height: 35,
-              width: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  width: 2,
-                  color: Colors.grey,
-                ),
-                color: Colors.white,
+        ),
+        MaterialButton(
+          onPressed: () async {
+            provider.offset = provider.offset + 10;
+            provider.getNextSearch(
+                provider.searchController.text, provider.offset);
+          },
+          child: Container(
+            height: 35,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.grey,
               ),
-              alignment: Alignment.center,
-              child: Text(
-                'Next',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[700],
-                ),
+              color: Colors.white,
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              'Next',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: quinaryColor,
               ),
             ),
           ),
-        ],
-      );
-    });
+        ),
+      ],
+    );
   }
 
   OutlineInputBorder styleBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(30),
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         width: 2,
         color: Colors.black,
       ),

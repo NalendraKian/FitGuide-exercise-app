@@ -1,6 +1,5 @@
-import 'package:fitguide_exercise/core/model/favourite_model.dart';
+import 'package:fitguide_exercise/UI/constant/color.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavouriteScreen extends StatefulWidget {
@@ -20,21 +19,26 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: primaryColor,
         body: SafeArea(
-      child: ListView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(25),
-            child: Text(
-              'Favourite List (Work In Progress)',
-              style: TextStyle(fontSize: 26),
-            ),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  'Favourite List (Work In Progress)',
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: quinaryColor,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 }
