@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<ExerciseViewModel>(context);
+    final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
@@ -81,9 +81,9 @@ class _SearchScreenState extends State<SearchScreen> {
             buildSearch(),
             const SizedBox(height: 12),
             buildFilter(),
-            modelView.searchExercise.isNotEmpty
+            provider.searchExercise.isNotEmpty
                 ? showSearchExercise()
-                : getNoResult(modelView.error),
+                : getNoResult(provider.error),
             const SizedBox(height: 12),
             nextAndPreviousButton(),
             const SizedBox(height: 12),
@@ -154,7 +154,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget buildFilter() {
-    final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
+    final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -177,8 +177,8 @@ class _SearchScreenState extends State<SearchScreen> {
               MaterialButton(
                 onPressed: () async {
                   const String difficulty = 'Beginner';
-                  modelView.getFilterSearch(
-                      modelView.searchController.text, difficulty);
+                  provider.getFilterSearch(
+                      provider.searchController.text, difficulty);
                 },
                 child: Container(
                   height: 35,
@@ -205,8 +205,8 @@ class _SearchScreenState extends State<SearchScreen> {
               MaterialButton(
                 onPressed: () {
                   const String difficulty = 'Intermediate';
-                  modelView.getFilterSearch(
-                      modelView.searchController.text, difficulty);
+                  provider.getFilterSearch(
+                      provider.searchController.text, difficulty);
                 },
                 child: Container(
                   height: 35,
@@ -233,8 +233,8 @@ class _SearchScreenState extends State<SearchScreen> {
               MaterialButton(
                 onPressed: () {
                   const String difficulty = 'Expert';
-                  modelView.getFilterSearch(
-                      modelView.searchController.text, difficulty);
+                  provider.getFilterSearch(
+                      provider.searchController.text, difficulty);
                 },
                 child: Container(
                   height: 35,
@@ -267,7 +267,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Consumer<ExerciseViewModel> showSearchExercise() {
     return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
-      final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
+      final provider = Provider.of<ExerciseViewModel>(context, listen: false);
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -277,9 +277,9 @@ class _SearchScreenState extends State<SearchScreen> {
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2),
-            itemCount: modelView.searchExercise.length,
+            itemCount: provider.searchExercise.length,
             itemBuilder: (_, index) {
-              final searchExercise = modelView.searchExercise[index];
+              final searchExercise = provider.searchExercise[index];
               return GestureDetector(
                 onTap: () async {
                   Navigator.of(context).push(PageRouteBuilder(
@@ -338,7 +338,7 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  Row nextAndPreviousButton() {
+  Widget nextAndPreviousButton() {
     final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

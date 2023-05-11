@@ -19,7 +19,7 @@ class _InitialBottomWidgetState extends State<BottomNavigationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<BottomNavViewModel>(context);
+    final provider = Provider.of<BottomNavViewModel>(context, listen: false);
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,

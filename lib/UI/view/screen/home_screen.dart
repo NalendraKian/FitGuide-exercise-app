@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<ExerciseViewModel>(context);
+    final provider = Provider.of<ExerciseViewModel>(context);
     return Scaffold(
         backgroundColor: primaryColor,
         body: SafeArea(
@@ -42,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              modelView.isLoading
+              provider.isLoading
                   ? getLoading()
-                  : modelView.exercises.isNotEmpty
+                  : provider.exercises.isNotEmpty
                       ? showExercise()
                       : getError()
             ],
@@ -70,26 +70,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget getError() {
-    return Center(
+    return const Center(
       child: Text(
         'error',
-        style: const TextStyle(color: Colors.red, fontSize: 22),
+        style: TextStyle(color: Colors.red, fontSize: 22),
       ),
     );
   }
 
   Consumer<ExerciseViewModel> showExercise() {
     return Consumer<ExerciseViewModel>(builder: (context, provider, _) {
-      final modelView = Provider.of<ExerciseViewModel>(context, listen: false);
+      final provider = Provider.of<ExerciseViewModel>(context, listen: false);
 
       return GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate:
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: modelView.exercises.length,
+        itemCount: provider.exercises.length,
         itemBuilder: (_, index) {
-          final exercise = modelView.exercises[index];
+          final exercise = provider.exercises[index];
           return GestureDetector(
             onTap: () async {
               Navigator.of(context).push(PageRouteBuilder(
