@@ -22,7 +22,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final modelView = Provider.of<CaloriesViewModel>(context);
+    final provider = Provider.of<CaloriesViewModel>(context);
     return Scaffold(
       backgroundColor: primaryColor,
       body: SingleChildScrollView(
@@ -73,9 +73,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
             ),
             const SizedBox(height: 24),
             buildSearch(),
-            modelView.calories.isNotEmpty
-                ? showSearchCalories()
-                : getNoResult(),
+            provider.calories.isNotEmpty ? showSearchCalories() : getNoResult(),
             const SizedBox(height: 12),
           ],
         ),
@@ -145,7 +143,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
 
   Consumer<CaloriesViewModel> showSearchCalories() {
     return Consumer<CaloriesViewModel>(builder: (context, provider, _) {
-      final modelView = Provider.of<CaloriesViewModel>(context, listen: false);
+      final provider = Provider.of<CaloriesViewModel>(context, listen: false);
 
       return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
@@ -155,9 +153,9 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: modelView.calories.length,
+              itemCount: provider.calories.length,
               itemBuilder: (_, index) {
-                final resultCalories = modelView.calories[index];
+                final resultCalories = provider.calories[index];
                 return ListTile(
                   shape: RoundedRectangleBorder(
                     //<-- SEE HERE
