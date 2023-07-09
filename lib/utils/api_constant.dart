@@ -7,3 +7,7 @@ class Api {
 class YoutubeApi {
   static const apiKey = 'YOUR API KEY HERE';
 }
+
+class YesTest {
+  static const test = 'if this got updated then i give up';
+}
