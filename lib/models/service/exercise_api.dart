@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:fitguide_exercise/core/model/exercise_model.dart';
-import 'package:fitguide_exercise/core/service/api/api_constant.dart';
-import 'package:fitguide_exercise/core/model/search_model.dart';
+import 'package:fitguide_exercise/models/exercise_model.dart';
+import 'package:fitguide_exercise/models/service/api_constant.dart';
+import 'package:fitguide_exercise/models/search_model.dart';
 
 class ExerciseApi {
   Dio dio = Dio();

@@ -1,7 +1,7 @@
-import 'package:fitguide_exercise/UI/constant/color.dart';
-import 'package:fitguide_exercise/UI/view/screen/detailed_exercise.dart';
+import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/UI/views/detailed_exercise.dart';
 import 'package:flutter/material.dart';
-import 'package:fitguide_exercise/UI/view_model/exercise_view_model.dart';
+import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

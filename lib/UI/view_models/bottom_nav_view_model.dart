@@ -1,8 +1,8 @@
-import 'package:fitguide_exercise/UI/view/screen/account_screen.dart';
-import 'package:fitguide_exercise/UI/view/screen/calories_burned_screen.dart';
-import 'package:fitguide_exercise/UI/view/screen/favourite_screen.dart';
+import 'package:fitguide_exercise/UI/views/account_screen.dart';
+import 'package:fitguide_exercise/UI/views/calories_burned_screen.dart';
+import 'package:fitguide_exercise/UI/views/favourite_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fitguide_exercise/UI/view/screen/home_screen.dart';
+import 'package:fitguide_exercise/UI/views/home_screen.dart';
 
 class BottomNavViewModel with ChangeNotifier {
   int _currentTab = 0;

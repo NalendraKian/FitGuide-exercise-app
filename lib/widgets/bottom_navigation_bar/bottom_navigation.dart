@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fitguide_exercise/UI/constant/color.dart';
-import 'package:fitguide_exercise/UI/view/screen/search_screen.dart';
-import 'package:fitguide_exercise/UI/view/widget/bottom_navigation_bar/bottom_navigation_item.dart';
-import 'package:fitguide_exercise/UI/view_model/bottom_nav_view_model.dart';
+import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/UI/views/search_screen.dart';
+import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation_item.dart';
+import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class _InitialBottomWidgetState extends State<BottomNavigationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<BottomNavViewModel>(context, listen: false);
+    final provider = Provider.of<BottomNavViewModel>(context, listen: true);
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,

@@ -1,5 +1,5 @@
-import 'package:fitguide_exercise/UI/constant/color.dart';
-import 'package:fitguide_exercise/UI/view/screen/login_screen.dart';
+import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/UI/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

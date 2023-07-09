@@ -1,6 +1,6 @@
-import 'package:fitguide_exercise/core/service/api/exercise_api.dart';
-import 'package:fitguide_exercise/core/model/exercise_model.dart';
-import 'package:fitguide_exercise/core/model/search_model.dart';
+import 'package:fitguide_exercise/models/service/exercise_api.dart';
+import 'package:fitguide_exercise/models/exercise_model.dart';
+import 'package:fitguide_exercise/models/search_model.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseViewModel with ChangeNotifier {

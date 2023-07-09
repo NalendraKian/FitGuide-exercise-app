@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:fitguide_exercise/core/model/calories_model.dart';
-import 'package:fitguide_exercise/core/service/api/api_constant.dart';
+import 'package:fitguide_exercise/models/calories_model.dart';
+import 'package:fitguide_exercise/models/service/api_constant.dart';
 
 class CaloriesApi {
   Dio dio = Dio();

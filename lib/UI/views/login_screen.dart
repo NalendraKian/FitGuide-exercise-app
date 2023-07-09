@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, body_might_complete_normally_nullable
 
-import 'package:fitguide_exercise/UI/view/widget/bottom_navigation_bar/bottom_navigation.dart';
-import 'package:fitguide_exercise/UI/view_model/login_view_model.dart';
+import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
+import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

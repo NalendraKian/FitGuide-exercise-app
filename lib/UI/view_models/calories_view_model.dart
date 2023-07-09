@@ -1,5 +1,5 @@
-import 'package:fitguide_exercise/core/model/calories_model.dart';
-import 'package:fitguide_exercise/core/service/api/calories_api.dart';
+import 'package:fitguide_exercise/models/calories_model.dart';
+import 'package:fitguide_exercise/models/service/calories_api.dart';
 import 'package:flutter/material.dart';
 
 class CaloriesViewModel with ChangeNotifier {

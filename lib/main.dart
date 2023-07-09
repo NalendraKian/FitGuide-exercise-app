@@ -1,8 +1,9 @@
-import 'package:fitguide_exercise/UI/view/screen/splash_screen.dart';
-import 'package:fitguide_exercise/UI/view_model/bottom_nav_view_model.dart';
-import 'package:fitguide_exercise/UI/view_model/calories_view_model.dart';
-import 'package:fitguide_exercise/UI/view_model/exercise_view_model.dart';
-import 'package:fitguide_exercise/UI/view_model/login_view_model.dart';
+import 'package:fitguide_exercise/UI/views/account_screen.dart';
+import 'package:fitguide_exercise/UI/views/splash_screen.dart';
+import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
+import 'package:fitguide_exercise/UI/view_models/calories_view_model.dart';
+import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
+import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ),
         home:
             const SplashScreen(appname: "FitGuide", tagline: "Keep Exercising"),
+        // const AccountScreen(),
       ),
     );
   }
