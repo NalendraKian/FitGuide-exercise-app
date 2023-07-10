@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitguide_exercise/models/exercise_model.dart';
-import 'package:fitguide_exercise/utils/api_constant.dart';
+import 'package:fitguide_exercise/utils/constants/api_constant.dart';
 import 'package:fitguide_exercise/models/search_model.dart';
 
 class ExerciseApi {

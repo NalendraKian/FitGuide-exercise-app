@@ -4,6 +4,7 @@ import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/calories_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
+import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,11 +37,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'FitGuide',
         theme: ThemeData(
-          textTheme: GoogleFonts.montserratTextTheme(),
+          textTheme: GoogleFonts.interTextTheme(),
         ),
         home:
             const SplashScreen(appname: "FitGuide", tagline: "Keep Exercising"),
-        // const AccountScreen(),
       ),
     );
   }

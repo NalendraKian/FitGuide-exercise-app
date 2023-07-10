@@ -1,20 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/UI/views/search_screen.dart';
 import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation_item.dart';
 import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BottomNavigationWidget extends StatefulWidget {
-  const BottomNavigationWidget({super.key});
+class BottomNavigatorBar extends StatefulWidget {
+  const BottomNavigatorBar({super.key});
 
   @override
-  State<BottomNavigationWidget> createState() => _InitialBottomWidgetState();
+  State<BottomNavigatorBar> createState() => _InitialBottomWidgetState();
 }
 
-class _InitialBottomWidgetState extends State<BottomNavigationWidget> {
+class _InitialBottomWidgetState extends State<BottomNavigatorBar> {
   final PageStorageBucket bucket = PageStorageBucket();
 
   @override

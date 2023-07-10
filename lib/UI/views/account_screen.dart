@@ -1,5 +1,6 @@
-import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/UI/views/login_screen.dart';
+import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,8 +12,10 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  late SharedPreferences loginData;
-  String username = '';
+  late PreferencesUtils preferencesUtils;
+  late String username;
+  late String email;
+  late String password;
 
   @override
   void initState() {
@@ -21,9 +24,11 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void initial() async {
-    loginData = await SharedPreferences.getInstance();
+    preferencesUtils = PreferencesUtils();
     setState(() {
-      username = loginData.getString('username').toString();
+      username = preferencesUtils.getPreferencesString('username').toString();
+      email = preferencesUtils.getPreferencesString('email').toString();
+      password = preferencesUtils.getPreferencesString('password').toString();
     });
   }
 
@@ -49,17 +54,21 @@ class _AccountScreenState extends State<AccountScreen> {
                 Text(
                   'Selamat Datang $username',
                 ),
+                Text('Email $email'),
+                Text('Passwrod $password'),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    loginData.setBool('login', true);
-                    loginData.remove('username');
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                        (route) => false);
+                    preferencesUtils.savePreferencesBool('loginStatus', false);
+                    preferencesUtils.removePreferences('username');
+                    preferencesUtils.removePreferences('email');
+                    preferencesUtils.removePreferences('password');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Log Out',

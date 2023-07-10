@@ -1,5 +1,9 @@
-import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/UI/views/login_screen.dart';
+import 'package:fitguide_exercise/utils/animations/slide_animation.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/UI/views/detailed_exercise.dart';
+import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
+import 'package:fitguide_exercise/widgets/buttons/button_full.dart';
 import 'package:flutter/material.dart';
 import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
 import 'package:provider/provider.dart';
@@ -12,19 +16,60 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late PreferencesUtils preferencesUtils;
+  bool? loginStatus;
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    setState(() {
+      loginStatus = preferencesUtils.getPreferencesBool('loginStatus');
+    });
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ExerciseViewModel>(context, listen: false).getAllExercises();
     });
     super.initState();
+    init();
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ExerciseViewModel>(context);
     return Scaffold(
-        backgroundColor: primaryColor,
+        backgroundColor: whiteColor,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: primaryColor,
+          centerTitle: true,
+          elevation: 0,
+          title: const Text('FitGuide'),
+          // action
+          actions: loginStatus == null || loginStatus == false
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SizedBox(
+                      width: 80,
+                      child: ButtonFull(
+                          title: 'Masuk',
+                          color: whiteColor,
+                          textColor: primaryColor,
+                          borderColor: primaryColor,
+                          press: () {
+                            Navigator.push(
+                              context,
+                              SlideAnimation(page: const LoginScreen()),
+                            );
+                          }),
+                    ),
+                  )
+                ]
+              : null,
+        ),
         body: SafeArea(
           child: ListView(
             children: [

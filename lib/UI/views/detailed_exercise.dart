@@ -1,5 +1,5 @@
-import 'package:fitguide_exercise/utils/color.dart';
-import 'package:fitguide_exercise/utils/api_constant.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
+import 'package:fitguide_exercise/utils/constants/api_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_api/youtube_api.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';

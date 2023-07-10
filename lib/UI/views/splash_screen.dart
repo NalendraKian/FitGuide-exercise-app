@@ -1,5 +1,6 @@
-import 'package:fitguide_exercise/utils/color.dart';
-import 'package:fitguide_exercise/UI/views/login_screen.dart';
+import 'package:fitguide_exercise/utils/animations/fade_animation2.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
+import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,8 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
+          FadeAnimation2(
+            page: const BottomNavigatorBar(),
           ),
         );
       },

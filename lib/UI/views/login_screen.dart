@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, body_might_complete_normally_nullable
 
+import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
 import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
   late SharedPreferences loginData;
+  late PreferencesUtils preferenceUtils;
   late bool newUser;
 
   @override
@@ -26,17 +28,36 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void checkLogin() async {
-    loginData = await SharedPreferences.getInstance();
-    newUser = loginData.getBool('login') ?? true;
+    preferenceUtils = PreferencesUtils();
+    await preferenceUtils.init();
+    String? email = preferenceUtils.getPreferencesString('email');
+    String? password = preferenceUtils.getPreferencesString('password');
+    bool? loginStatus = preferenceUtils.getPreferencesBool('loginStatus');
 
-    if (newUser == false) {
+    if (loginStatus == true) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const BottomNavigationWidget(),
+            builder: (context) => const BottomNavigatorBar(),
           ),
           (route) => false);
     }
+  }
+
+  Future<void> saveUsername(String usernameValue) async {
+    preferenceUtils.savePreferencesString('username', usernameValue);
+  }
+
+  Future<void> saveEmail(String emailValue) async {
+    preferenceUtils.savePreferencesString('email', emailValue);
+  }
+
+  Future<void> savePassword(String passwordValue) async {
+    preferenceUtils.savePreferencesString('password', passwordValue);
+  }
+
+  Future<void> saveStatus() async {
+    preferenceUtils.savePreferencesBool('loginStatus', true);
   }
 
   @override
@@ -99,18 +120,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(),
-                  onPressed: () {
+                  onPressed: () async {
                     final isValidForm = formKey.currentState!.validate();
 
-                    String username = loginViewModel.nameController.text;
                     if (isValidForm) {
-                      loginData.setBool('login', false);
-                      loginData.setString('username', username);
+                      await saveUsername(loginViewModel.nameController.text);
+                      await saveEmail(loginViewModel.emailController.text);
+                      await savePassword(
+                          loginViewModel.passwordController.text);
+                      await saveStatus();
+
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                const BottomNavigationWidget(),
+                            builder: (context) => const BottomNavigatorBar(),
                           ),
                           (route) => false);
                     }

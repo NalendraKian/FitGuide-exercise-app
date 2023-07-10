@@ -1,4 +1,4 @@
-import 'package:fitguide_exercise/utils/color.dart';
+import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
