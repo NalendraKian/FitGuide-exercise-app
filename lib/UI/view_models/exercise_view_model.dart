@@ -22,6 +22,8 @@ class ExerciseViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  getEmptySearch() async {}
+
   List<SearchExercise> _searchExercises = [];
   List<SearchExercise> get searchExercise => _searchExercises;
 

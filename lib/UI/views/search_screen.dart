@@ -1,6 +1,7 @@
 import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/UI/views/detailed_exercise.dart';
 import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
+import 'package:fitguide_exercise/widgets/filter/exercise_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  String? searchQuery = '';
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -20,26 +22,25 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
   }
 
-  final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: whiteColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
                     Provider.of<ExerciseViewModel>(context, listen: false)
                         .getAllExercises();
+                    Navigator.pop(context);
                   },
                   icon: const Icon(
                     Icons.arrow_back,
@@ -53,38 +54,38 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 8, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Find an Exercise',
-                    style: TextStyle(
-                      fontSize: 26,
-                      color: quinaryColor,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'With Filter (Coming Soon)',
+                'Find an Exercise',
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
+                  fontSize: 26,
+                  color: quinaryColor,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
             const SizedBox(height: 24),
             buildSearch(),
-            const SizedBox(height: 12),
-            buildFilter(),
+            const Align(
+              alignment: AlignmentDirectional.centerEnd,
+              child: Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: FilterExercise(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 8, 0),
+              child: Text(
+                'Result for $searchQuery',
+                style: TextStyle(
+                  fontSize: 26,
+                  color: quinaryColor,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
             provider.searchExercise.isNotEmpty
                 ? showSearchExercise()
-                : getNoResult(provider.error),
-            const SizedBox(height: 12),
+                : Center(child: getNoResult(provider.error)),
             nextAndPreviousButton(),
             const SizedBox(height: 12),
           ],
@@ -98,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
         child: Text(
-          error,
+          'No Matching Result',
           style: TextStyle(
             fontSize: 26,
             color: quinaryColor,
@@ -112,29 +113,25 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget buildSearch() {
     final provider = Provider.of<ExerciseViewModel>(context, listen: false);
     return Form(
-      key: formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: TextField(
           controller: provider.searchController,
           decoration: InputDecoration(
-            prefixIcon: IconButton(
-              onPressed: () async {
-                provider.getSearch(provider.searchController.text);
-              },
-              icon: const Icon(
-                Icons.search,
-                color: Colors.blue,
-              ),
-            ),
             hintText: 'Search...',
             suffixIcon: IconButton(
-              onPressed: () {
+              onPressed: () async {
+                await provider.getSearch(provider.searchController.text);
+                if (provider.searchController.text == '') {
+                  provider.searchController.text = "all exercise";
+                }
+                searchQuery = provider.searchController.text;
+                setState(() {});
                 provider.searchController.clear();
               },
-              icon: const Icon(
-                Icons.clear,
-                color: Colors.blue,
+              icon: Icon(
+                Icons.search,
+                color: primaryColor,
               ),
             ),
             border: styleBorder(),
@@ -343,11 +340,16 @@ class _SearchScreenState extends State<SearchScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        MaterialButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           onPressed: () async {
             provider.offset = provider.offset - 10;
             provider.getNextSearch(
                 provider.searchController.text, provider.offset);
+            setState(() {});
           },
           child: Container(
             height: 35,
@@ -371,11 +373,16 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
         ),
-        MaterialButton(
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
           onPressed: () async {
             provider.offset = provider.offset + 10;
             provider.getNextSearch(
                 provider.searchController.text, provider.offset);
+            setState(() {});
           },
           child: Container(
             height: 35,

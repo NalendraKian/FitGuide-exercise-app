@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 Color quarternaryColor = const Color(0xff9c99c7);
-Color quinaryColor = const Color(0xff425774);
 
 Color primaryColor = const Color(0XFFE73825);
 Color secondaryColor = const Color(0XFFE1E1E1);
 Color tertiaryColor = const Color(0XFF010000);
+Color quinaryColor = const Color.fromARGB(255, 30, 38, 50);
 
 Color blueColor = Colors.blue;
 Color whiteColor = Colors.white;
