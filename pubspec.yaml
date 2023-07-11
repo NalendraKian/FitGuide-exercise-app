@@ -40,6 +40,9 @@ dependencies:
   youtube_api: ^1.0.4
   fluttertoast: ^8.2.2
   http: ^0.13.3
+  url_launcher: ^6.1.12
+  animated_snack_bar: ^0.3.1
+
 
 dev_dependencies:
   flutter_test:

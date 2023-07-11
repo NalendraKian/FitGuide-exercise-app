@@ -70,37 +70,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 ]
               : null,
         ),
-        body: SafeArea(
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Text(
-                  'Welcome to FitGuide',
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: quinaryColor,
-                    fontWeight: FontWeight.w900,
+        body: provider.isLoading
+            ? Center(child: getLoading())
+            : ListView(
+                shrinkWrap: true,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(25),
+                    child: Text(
+                      'Welcome to FitGuide',
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: quinaryColor,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              provider.isLoading
-                  ? getLoading()
-                  : provider.exercises.isNotEmpty
-                      ? showExercise()
-                      : getError()
-            ],
-          ),
-        ));
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  provider.exercises.isNotEmpty ? showExercise() : getError(),
+                ],
+              ));
   }
 
   Widget getLoading() {
     return Center(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
             color: quinaryColor,

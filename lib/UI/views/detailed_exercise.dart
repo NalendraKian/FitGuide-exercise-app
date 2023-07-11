@@ -34,7 +34,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
 
   Future<void> callAPI() async {
     videoResult = await youtube.search(
-      "${widget.name} exercise tutorial",
+      "${widget.name} dbexercise tutorial",
       order: 'relevance',
       videoDuration: 'any',
     );
@@ -60,7 +60,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: whiteColor,
       body: Stack(
         children: [
           FadeInImage(
