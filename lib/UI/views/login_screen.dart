@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, body_might_complete_normally_nullable
 
+import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
 import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
@@ -67,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Login Page'),
+          backgroundColor: primaryColor,
         ),
         body: Container(
           padding: const EdgeInsets.all(16),
@@ -119,7 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 20,
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: primaryColor),
                   onPressed: () async {
                     final isValidForm = formKey.currentState!.validate();
 

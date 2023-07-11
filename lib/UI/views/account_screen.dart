@@ -50,8 +50,8 @@ class _ProfileState extends State<AccountScreen> {
         context,
         FadeAnimation(page: const LoginScreen()),
       );
+      navigator.homeTab();
     }
-    navigator.homeTab();
   }
 
   @override

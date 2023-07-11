@@ -1,5 +1,9 @@
+import 'package:fitguide_exercise/UI/views/login_screen.dart';
+import 'package:fitguide_exercise/utils/animations/slide_animation.dart';
 import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/UI/view_models/calories_view_model.dart';
+import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
+import 'package:fitguide_exercise/widgets/buttons/button_full.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,37 +18,65 @@ class CaloriesBurnedScreen extends StatefulWidget {
 
 class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
   final formKey = GlobalKey<FormState>();
+  late PreferencesUtils preferencesUtils;
+  bool? loginStatus;
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    setState(() {
+      loginStatus = preferencesUtils.getPreferencesBool('loginStatus');
+    });
+  }
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<CaloriesViewModel>(context, listen: false);
+    });
     super.initState();
+    init();
   }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CaloriesViewModel>(context, listen: false);
     return Scaffold(
-      backgroundColor: primaryColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: primaryColor,
+        centerTitle: true,
+        elevation: 0,
+        title: const Text('FitGuide'),
+        actions: loginStatus == null || loginStatus == false
+            ? [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    width: 80,
+                    child: ButtonFull(
+                        title: 'Masuk',
+                        color: whiteColor,
+                        textColor: primaryColor,
+                        borderColor: primaryColor,
+                        press: () {
+                          Navigator.push(
+                            context,
+                            SlideAnimation(page: const LoginScreen()),
+                          );
+                        }),
+                  ),
+                )
+              ]
+            : null,
+      ),
+      backgroundColor: whiteColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 24, 8, 0),
               child: Row(
@@ -61,18 +93,9 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'with extra stuffs coming soon',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
             const SizedBox(height: 24),
             buildSearch(),
+            const SizedBox(height: 24),
             provider.calories.isNotEmpty ? showSearchCalories() : getNoResult(),
             const SizedBox(height: 12),
           ],
@@ -108,7 +131,10 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
           decoration: InputDecoration(
             prefixIcon: IconButton(
               onPressed: () async {
-                provider.getSearchCalories(provider.searchController.text);
+                // provider.calories.clear;
+                await provider
+                    .getSearchCalories(provider.searchController.text);
+                setState(() {});
               },
               icon: const Icon(
                 Icons.search,
@@ -150,7 +176,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ListView.builder(
+            ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: provider.calories.length,
@@ -158,7 +184,6 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
                 final resultCalories = provider.calories[index];
                 return ListTile(
                   shape: RoundedRectangleBorder(
-                    //<-- SEE HERE
                     side: const BorderSide(width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -167,14 +192,36 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          'Calories Burned per hour : ${resultCalories.caloriesPerHour}'),
-                      Text(
-                        'Duration : ${resultCalories.durationMinutes}',
+                        'Calories Burned per hour : ${resultCalories.caloriesPerHour}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15),
+                      ),
+                      const SizedBox(
+                        height: 2,
                       ),
                       Text(
-                          'Total Calories Burned : ${resultCalories.totalCalories}'),
+                        'Duration : ${resultCalories.durationMinutes}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        'Total Calories Burned : ${resultCalories.totalCalories}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
                     ],
                   ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  height: 12,
                 );
               },
             )
