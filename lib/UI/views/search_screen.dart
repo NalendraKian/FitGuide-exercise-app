@@ -30,7 +30,6 @@ class _SearchScreenState extends State<SearchScreen> {
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -65,11 +64,11 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             const SizedBox(height: 24),
             buildSearch(),
-            const Align(
+            Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Padding(
                 padding: EdgeInsets.only(right: 20),
-                child: FilterExercise(),
+                child: FilterExercise(exerciseName: searchQuery),
               ),
             ),
             Padding(
@@ -146,118 +145,6 @@ class _SearchScreenState extends State<SearchScreen> {
             filled: true,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildFilter() {
-    final provider = Provider.of<ExerciseViewModel>(context, listen: false);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Difficulty',
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 20,
-              color: quinaryColor,
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              MaterialButton(
-                onPressed: () async {
-                  const String difficulty = 'Beginner';
-                  provider.getFilterSearch(
-                      provider.searchController.text, difficulty);
-                },
-                child: Container(
-                  height: 35,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    color: Colors.white,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Beginner',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: quinaryColor,
-                    ),
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  const String difficulty = 'Intermediate';
-                  provider.getFilterSearch(
-                      provider.searchController.text, difficulty);
-                },
-                child: Container(
-                  height: 35,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    color: Colors.white,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Intermediate',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: quinaryColor,
-                    ),
-                  ),
-                ),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  const String difficulty = 'Expert';
-                  provider.getFilterSearch(
-                      provider.searchController.text, difficulty);
-                },
-                child: Container(
-                  height: 35,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.grey,
-                    ),
-                    color: Colors.white,
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Expert',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: quinaryColor,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

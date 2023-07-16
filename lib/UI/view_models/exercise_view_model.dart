@@ -7,6 +7,8 @@ class ExerciseViewModel with ChangeNotifier {
   bool isLoading = true;
   String error = '';
   String difficulty = '';
+  String type = '';
+  String muscle = '';
   int offset = 0;
 
   List<Exercise> _exercises = [];
@@ -29,25 +31,39 @@ class ExerciseViewModel with ChangeNotifier {
 
   getSearch(String name) async {
     difficulty = '';
+    type = '';
+    muscle = '';
     offset = 0;
 
-    final c = await ExerciseApi.searchExercise(name, difficulty, offset);
+    final c = await ExerciseApi.searchExercise(
+      name,
+      difficulty,
+      type,
+      muscle,
+      offset,
+    );
     _searchExercises = c;
 
     notifyListeners();
   }
 
-  getFilterSearch(String name, String newDifficulty) async {
-    difficulty = newDifficulty;
+  getFilterSearch(String name, String filterType, String filterMuscle,
+      String filterDifficulty) async {
     offset = 0;
 
-    final c = await ExerciseApi.searchExercise(name, difficulty, offset);
+    final c = await ExerciseApi.searchExercise(
+      name,
+      filterDifficulty,
+      filterType,
+      filterMuscle,
+      offset,
+    );
+
+    difficulty = filterDifficulty;
+    muscle = filterMuscle;
+    type = filterType;
 
     _searchExercises = c;
-
-    if (_searchExercises.isEmpty) {
-      error = 'No Result was Found';
-    }
 
     notifyListeners();
   }
@@ -59,11 +75,12 @@ class ExerciseViewModel with ChangeNotifier {
       offset = newOffset;
     }
 
-    List<SearchExercise> c =
-        await ExerciseApi.searchExercise(name, difficulty, offset);
+    List<SearchExercise> c = await ExerciseApi.searchExercise(
+        name, difficulty, type, muscle, offset);
 
     if (c.isEmpty) {
-      await ExerciseApi.searchExercise(name, difficulty, offset - 10);
+      await ExerciseApi.searchExercise(
+          name, difficulty, type, muscle, offset - 10);
     } else {
       _searchExercises = c;
     }

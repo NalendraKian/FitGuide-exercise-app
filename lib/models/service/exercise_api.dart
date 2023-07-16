@@ -30,12 +30,14 @@ class ExerciseApi {
   }
 
   static Future<List<SearchExercise>> searchExercise(
-      String name, difficulty, int offset) async {
+      String name, difficulty, String type, String muscle, int offset) async {
     try {
       final Response response = await Dio().get(Api.baseUrlExercise,
           options: Options(headers: {"X-Api-Key": Api.apiKey}),
           queryParameters: {
             'name': name,
+            'muscle': muscle,
+            'type': type,
             'difficulty': difficulty,
             "offset": offset,
           });
