@@ -1,10 +1,8 @@
-import 'package:fitguide_exercise/UI/views/account_screen.dart';
 import 'package:fitguide_exercise/UI/views/splash_screen.dart';
 import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/calories_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/exercise_view_model.dart';
 import 'package:fitguide_exercise/UI/view_models/login_view_model.dart';
-import 'package:fitguide_exercise/widgets/bottom_navigation_bar/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

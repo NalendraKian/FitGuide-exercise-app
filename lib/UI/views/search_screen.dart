@@ -67,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Padding(
-                padding: EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.only(right: 20),
                 child: FilterExercise(exerciseName: searchQuery),
               ),
             ),

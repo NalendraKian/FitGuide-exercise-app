@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FilterExercise extends StatefulWidget {
-  String? exerciseName;
+  final String? exerciseName;
 
-  FilterExercise({
+  const FilterExercise({
     super.key,
     this.exerciseName,
   });
@@ -496,7 +496,7 @@ class _FilterExerciseState extends State<FilterExercise> {
                             ),
 
                             // Filter by Muscle
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             ),
                             const Text(
@@ -1562,7 +1562,7 @@ class _FilterExerciseState extends State<FilterExercise> {
                             ),
 
                             // Filter by Difficulty
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             ),
                             const Text(
@@ -1731,7 +1731,7 @@ class _FilterExerciseState extends State<FilterExercise> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             )
                           ],

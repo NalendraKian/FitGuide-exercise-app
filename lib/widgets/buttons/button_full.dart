@@ -46,7 +46,7 @@ class ButtonFull extends StatelessWidget {
         onPressed: press,
         child: Text(title,
             style: GoogleFonts.poppins(
-                fontSize: 14, color: textColor, fontWeight: FontWeight.w600)),
+                fontSize: 16, color: textColor, fontWeight: FontWeight.w600)),
       ),
     );
   }

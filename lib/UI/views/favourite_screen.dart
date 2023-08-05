@@ -70,7 +70,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      width: 80,
+                      width: 90,
                       child: ButtonFull(
                           title: 'Masuk',
                           color: whiteColor,

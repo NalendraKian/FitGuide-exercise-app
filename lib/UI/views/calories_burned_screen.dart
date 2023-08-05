@@ -53,7 +53,7 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: SizedBox(
-                    width: 80,
+                    width: 90,
                     child: ButtonFull(
                         title: 'Masuk',
                         color: whiteColor,
@@ -129,28 +129,19 @@ class _CaloriesBurnedScreenState extends State<CaloriesBurnedScreen> {
         child: TextField(
           controller: provider.searchController,
           decoration: InputDecoration(
-            prefixIcon: IconButton(
+            suffixIcon: IconButton(
               onPressed: () async {
                 // provider.calories.clear;
                 await provider
                     .getSearchCalories(provider.searchController.text);
                 setState(() {});
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.search,
-                color: Colors.blue,
+                color: primaryColor,
               ),
             ),
             hintText: 'Search...',
-            suffixIcon: IconButton(
-              onPressed: () {
-                provider.searchController.clear();
-              },
-              icon: const Icon(
-                Icons.clear,
-                color: Colors.blue,
-              ),
-            ),
             border: styleBorder(),
             enabledBorder: styleBorder(),
             focusedBorder: styleBorder(),

@@ -2,6 +2,7 @@ import 'package:fitguide_exercise/models/service/favorite_manager.dart';
 import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/utils/constants/api_constant.dart';
 import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
+import 'package:fitguide_exercise/widgets/buttons/button_full.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_api/youtube_api.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -33,33 +34,6 @@ class _DetailedExerciseState extends State<DetailedExercise> {
   FavoriteManager favoriteManager = FavoriteManager();
   bool? loginStatus = false;
 
-  Future<void> checkFavoriteStatus() async {
-    List wishlist = await favoriteManager.getFavourite();
-
-    setState(() {
-      isFavorite = wishlist.any((item) => item.name == widget.name);
-    });
-  }
-
-  Future<void> toggleFavoriteExercise() async {
-    if (isFavorite) {
-      await favoriteManager.removeFavoriteExercise(widget.name);
-    } else {
-      await favoriteManager.addWishlistItem(
-        widget.name,
-        widget.type,
-        widget.muscle,
-        widget.equipment,
-        widget.difficulty,
-        widget.instructions,
-      );
-    }
-
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-  }
-
   void init() async {
     preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
@@ -81,17 +55,44 @@ class _DetailedExerciseState extends State<DetailedExercise> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    callAPI();
-    init();
-    checkFavoriteStatus();
+  Future<void> toggleFavoriteExercise() async {
+    if (isFavorite) {
+      await favoriteManager.removeFavoriteExercise(widget.name);
+    } else {
+      await favoriteManager.addWishlistItem(
+        widget.name,
+        widget.type,
+        widget.muscle,
+        widget.equipment,
+        widget.difficulty,
+        widget.instructions,
+      );
+    }
+
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  Future<void> checkFavoriteStatus() async {
+    List wishlist = await favoriteManager.getFavourite();
+
+    setState(() {
+      isFavorite = wishlist.any((item) => item.name == widget.name);
+    });
   }
 
   @override
   void didUpdateWidget(covariant DetailedExercise oldWidget) {
     super.didUpdateWidget(oldWidget);
+    checkFavoriteStatus();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    callAPI();
+    init();
     checkFavoriteStatus();
   }
 
@@ -136,6 +137,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
               color: Colors.black.withOpacity(0.0),
               child: Row(
                 children: [
+                  //Back Button
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -147,6 +149,7 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                   ),
                   const Spacer(),
                   loginStatus!
+                      // Favorite Button
                       ? IconButton(
                           onPressed: () async {
                             toggleFavoriteExercise();
@@ -215,84 +218,133 @@ class _DetailedExerciseState extends State<DetailedExercise> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Difficulty',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  child: ButtonFull(
+                      title: widget.difficulty,
+                      color: primaryColor,
+                      textColor: whiteColor,
+                      press: () => null),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Exercise Type',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  child: ButtonFull(
+                      title: widget.type,
+                      color: primaryColor,
+                      textColor: whiteColor,
+                      press: () => null),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Equipment',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  child: ButtonFull(
+                      title: widget.equipment,
+                      color: primaryColor,
+                      textColor: whiteColor,
+                      press: () => null),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Muscle ',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  child: ButtonFull(
+                      title: widget.muscle,
+                      color: primaryColor,
+                      textColor: whiteColor,
+                      press: () => null),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(height: 12),
+            Text(
+              'Instruction',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              widget.instructions,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              'Tutorial Video',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               children: videoResult.map<Widget>(listItem).toList(),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Difficulty',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.difficulty,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Exercise Type',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.type,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Equipment',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.equipment,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Muscle ',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.muscle,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Instruction',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(widget.instructions),
             const SizedBox(height: 30),
-            Text(
-              'Tutorial Video',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
           ],
         ),
       ),

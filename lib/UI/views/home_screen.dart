@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      width: 80,
+                      width: 90,
                       child: ButtonFull(
                           title: 'Masuk',
                           color: whiteColor,

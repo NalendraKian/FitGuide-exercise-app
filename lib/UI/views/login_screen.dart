@@ -31,8 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void checkLogin() async {
     preferenceUtils = PreferencesUtils();
     await preferenceUtils.init();
-    String? email = preferenceUtils.getPreferencesString('email');
-    String? password = preferenceUtils.getPreferencesString('password');
     bool? loginStatus = preferenceUtils.getPreferencesBool('loginStatus');
 
     if (loginStatus == true) {

@@ -1,11 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:fitguide_exercise/UI/view_models/bottom_nav_view_model.dart';
-import 'package:fitguide_exercise/UI/views/home_screen.dart';
 import 'package:fitguide_exercise/UI/views/login_screen.dart';
 import 'package:fitguide_exercise/utils/animations/fade_animation.dart';
-import 'package:fitguide_exercise/utils/animations/fade_animation2.dart';
 import 'package:fitguide_exercise/utils/animations/slide_animation.dart';
 import 'package:fitguide_exercise/utils/colors/colors.dart';
 import 'package:fitguide_exercise/utils/preferences/preferences_utils.dart';
@@ -14,7 +11,6 @@ import 'package:fitguide_exercise/widgets/profile/section_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
